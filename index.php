@@ -6,7 +6,8 @@
  * Time: 13:11
  */
 
-//lt raides, tik sk, tarpai, klaidos.
+//lt raides, tik sk, tarpai, klaidos, kad spausdintu visas klaidas iskart
+//    +    ,   +    ,  +   ,   +    ,
 //------prepared statement------
 $mysqli = new mysqli("localhost", "root", "", "USF");
 if ($mysqli->connect_errno) {
@@ -14,45 +15,49 @@ if ($mysqli->connect_errno) {
 }
 
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
-
+    $status = array();
     $name = ($_POST['name']);
     $lastname = ($_POST['lastname']);
     $rate = ($_POST['rate']);
-    if ($name != '' && $lastname != '' && $rate != '') {
-        if (preg_match("/[a-zA-Zą-žĄ-Ž]/", $_POST['name'])) {
-            if (preg_match("/[a-zA-Zą-žĄ-Ž]/", $_POST['lastname'])) {
-                if (preg_match("/[1-9]/", $_POST['rate'])) {
-                    $stmt = $mysqli->prepare("INSERT INTO Employee (`name`, Lastname, hourlyRate) VALUES (?,?,? )");
-                    $stmt->bind_param("ssi", $name, $lastname, $rate);
-                    $stmt->execute();
-                    $stmt->close();
-                    $status = "success";
-                } else {
-                    $status = "error_rate";
-                }
-            } else {
-                $status = "error_lastname";
-            }
-        } else {
-            $status = "error_name";
-        }
-    } else {
-        $status = 'error';
+    if ($name = '' && $lastname = '' && $rate = '') {
+        $status['empty'] = 'missing data in the fields';
     }
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=$status");
+    if (!preg_match("/^[a-zą-ž]+$/i", $_POST['name'])) {
+        $status['error_name'] = "error in name field";
+    }
+    if (!preg_match("/^[a-zą-ž]+$/i", $_POST['lastname'])) {
+        $status['error_lastname'] = "error in lastname field";
+    }
+    if (!preg_match("/^[1-9]+$/", $_POST['rate'])) {
+        $status['error_rate'] = "error in rate field";
+    }
+    if(count($status) == 0){
+        $stmt = $mysqli->prepare("INSERT INTO Employee (username, Lastname, hourlyRate) VALUES (?,?,? )");
+        $stmt->bind_param("ssi", $name, $lastname, $rate);
+        $stmt->execute();
+        $stmt->close();
+        header("Location: http://" . $_SERVER['SERVER_NAME']);
+        $status['success'] = "successfully inserted";
+    }
 
 }
+/* change character set to utf8 */
+$mysqli->set_charset("utf8");
+/* Print current character set */
+//$charset = $mysqli->character_set_name();
+//printf ("Current character set is %s\n", $charset);
 
 ?>
 <!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <html>
 <body>
-<?php if (isset($_GET['status'])) {
-    if ($_GET['status'] == 'error') {
-        echo "erroras";
-    } else {
-        echo "successfully inserted";
-    }
+<?php
+if (isset($status['empty'])) {
+    echo $status['empty'];
+}
+if (isset($status['success'])) {
+    echo $status['success'];
 }
 ?>
 <form method="post">
@@ -60,26 +65,20 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
         <legend><strong>Add user</strong></legend>
         <input type="text" name="name" placeholder="Name"><br>
         <?php
-        if (isset($_GET['status'])) {
-            if ($_GET['status'] == 'error_name') {
-                echo "error in name field";
-            }
+        if (isset($status['error_name'])) {
+            echo $status['error_name'];
         }
         ?>
         <input type="text" name="lastname" placeholder="Lastname"><br>
         <?php
-        if (isset($_GET['status'])) {
-            if ($_GET['status'] == 'error_lastname') {
-                echo "error in lastname field";
-            }
+        if (isset($status['error_lastname'])) {
+            echo $status['error_lastname'];
         }
         ?>
         <input type="text" name="rate" placeholder="Hourly rate"><br>
         <?php
-        if (isset($_GET['status'])) {
-            if ($_GET['status'] == 'error_rate') {
-                echo "error in rate field";
-            }
+        if (isset($status['error_rate'])) {
+            echo $status['error_rate'];
         }
         ?>
         <input type="submit" value="Add">
