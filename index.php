@@ -6,46 +6,36 @@
  * Time: 13:11
  */
 
-//lt raides, tik sk, tarpai, klaidos, kad spausdintu visas klaidas iskart
-//    +    ,   +    ,  +   ,   +    ,
 //------prepared statement------
 $mysqli = new mysqli("localhost", "root", "", "USF");
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $status = array();
     $name = ($_POST['name']);
     $lastname = ($_POST['lastname']);
     $rate = ($_POST['rate']);
-    if ($name = '' && $lastname = '' && $rate = '') {
-        $status['empty'] = 'missing data in the fields';
-    }
     if (!preg_match("/^[a-zą-ž]+$/i", $_POST['name'])) {
-        $status['error_name'] = "error in name field";
+        $status['error_name'] = "incorrect name field";
     }
     if (!preg_match("/^[a-zą-ž]+$/i", $_POST['lastname'])) {
-        $status['error_lastname'] = "error in lastname field";
+        $status['error_lastname'] = "incorrect lastname field";
     }
     if (!preg_match("/^[1-9]+$/", $_POST['rate'])) {
-        $status['error_rate'] = "error in rate field";
+        $status['error_rate'] = "incorrect rate field";
     }
-    if(count($status) == 0){
+    if (empty($status)) {
         $stmt = $mysqli->prepare("INSERT INTO Employee (username, Lastname, hourlyRate) VALUES (?,?,? )");
         $stmt->bind_param("ssi", $name, $lastname, $rate);
         $stmt->execute();
         $stmt->close();
-        header("Location: http://" . $_SERVER['SERVER_NAME']);
-        $status['success'] = "successfully inserted";
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=success");
     }
 
 }
 /* change character set to utf8 */
 $mysqli->set_charset("utf8");
-/* Print current character set */
-//$charset = $mysqli->character_set_name();
-//printf ("Current character set is %s\n", $charset);
 
 ?>
 <!DOCTYPE html>
@@ -53,11 +43,10 @@ $mysqli->set_charset("utf8");
 <html>
 <body>
 <?php
-if (isset($status['empty'])) {
-    echo $status['empty'];
-}
-if (isset($status['success'])) {
-    echo $status['success'];
+if (isset($_GET['status'])) {
+    if ($_GET['status'] == "success") {
+        echo "Successfully inserted";
+    }
 }
 ?>
 <form method="post">
