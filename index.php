@@ -5,7 +5,6 @@
  * Date: 25/03/14
  * Time: 13:11
  */
-
 //------prepared statement------
 $mysqli = new mysqli("localhost", "root", "", "USF");
 if ($mysqli->connect_errno) {
