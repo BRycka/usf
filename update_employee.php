@@ -6,5 +6,7 @@
  * Time: 11:28
  */
 require('db.php');
-require('form.php');
-form('Update');
+require('update_form.php');
+$id = $_GET['id'];
+update_form('Update', $id);
+echo "<a href='/'>Main page</a>";

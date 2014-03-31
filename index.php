@@ -6,7 +6,6 @@
  * Time: 10:12
  */
 require('db.php');
-$result = mysqli_query($mysqli, 'SELECT * FROM Employee');
 ?>
 <html>
 <table border="1">
@@ -17,15 +16,23 @@ $result = mysqli_query($mysqli, 'SELECT * FROM Employee');
         <th>Update</th>
         <th>Delete</th>
     </tr>
-    <?php while ($row = mysqli_fetch_array($result)) { ?>
+    <?php
+    $result = mysqli_query($mysqli, 'SELECT * FROM Employee');
+    while ($row = mysqli_fetch_array($result)) {
+        ?>
         <tr>
             <td><?php echo $row['username']; ?></td>
             <td><?php echo $row['Lastname']; ?></td>
             <td><?php echo $row['hourlyRate']; ?></td>
-            <form method="post" action="update_employee.php"><td><input type='submit' value='Update' name="<?php echo $row['id'];?>"></td>
-            <td><input type='submit' value='Delete' name='delete'></td></form>
+            <td><a href="update_employee.php?id=<?php echo $row['id'] ?>">Update</a></td>
+            <td>
+                <form method="post" action="/">
+                    <input name="id" value="2" type="hidden">
+                    <input type='submit' value='Delete' name="<?php echo $row['id']; ?>">
+                </form>
+            </td>
         </tr>
     <?php }; ?>
 </table>
-<a href='http://localhost/add_new.php'>--->>>Add new employee<<<---</a>
+<a href="add_employee.php">--->>>Add new employee<<<---</a>
 </html>
