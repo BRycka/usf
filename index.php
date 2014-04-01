@@ -8,8 +8,10 @@
 require('db.php');
 if (isset($_POST['delete'])) {
     $id = $_POST['id'];
-    if (!mysqli_query($mysqli, "DELETE FROM Employee WHERE id = $id")) {
-        echo "error ";
+    $stmt = $mysqli->prepare("DELETE FROM Employee WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    if(!$stmt->execute()){
+        echo "delete failed";
     } else {
         echo "successfully deleted";
         echo '<script> window.location="/"; </script> ';
@@ -21,13 +23,10 @@ $order = 'username';
 if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     $order = $_GET['orderBy'];
 }
-
-//$query = 'SELECT * FROM aTable ORDER BY '.$order;
 ?>
 <html>
 <head>
     <style>
-        /*table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {*/
         table.sortable th:after {
             content: " \25B4\25BE";
         }
@@ -49,16 +48,8 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     </thead>
     <?php
     $statment = $mysqli->stmt_init();
-    if (!$statment->prepare('SELECT * FROM Employee ORDER BY ' . $order)) {
-        echo 'blogai';
-        return;
-    }
-
-    if (!$statment->execute()) {
-        echo 'blogai2';
-        return;
-    }
-
+    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order);
+    $statment->execute();
     $row = array(
         'id' => null,
         'username' => null,

@@ -166,6 +166,7 @@ function form($action)
             <input type="submit" value="<?php echo $action; ?>">
         </fieldset>
     </form>
+    <a href='http://localhost'>Main page</a>
     </body>
     </html>
 <?php

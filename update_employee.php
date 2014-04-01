@@ -9,4 +9,3 @@ require('db.php');
 require('update_form.php');
 $id = $_GET['id'];
 update_form('Update', $id);
-echo "<a href='/'>Main page</a>";

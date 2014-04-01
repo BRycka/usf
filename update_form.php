@@ -70,8 +70,8 @@ function update_form($action, $id)
             $status['error_twoNames'] = "<p>just two names possible</p>";
         }
         if (empty($status)) {
-            $stmt = $mysqli->prepare("UPDATE Employee SET username=?, Lastname=?, hourlyRate=? WHERE id=$id");
-            $stmt->bind_param("ssd", $name, $lastname, $rate);
+            $stmt = $mysqli->prepare("UPDATE Employee SET username=?, Lastname=?, hourlyRate=? WHERE id=?");
+            $stmt->bind_param("ssdi", $name, $lastname, $rate, $id);
             $stmt->execute();
             $stmt->close();
             //header("Location: http://" . $_SERVER['SERVER_NAME'] . "add_new.php/?status=success");
@@ -163,6 +163,7 @@ function update_form($action, $id)
             <input type="submit" value="<?php echo $action; ?>">
         </fieldset>
     </form>
+    <a href='/'>Main page</a>
     </body>
     </html>
 <?php

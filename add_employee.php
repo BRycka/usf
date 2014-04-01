@@ -13,13 +13,4 @@
  */
 require('db.php');
 require('add_form.php');
-?>
-<!DOCTYPE html>
-<html>
-<body>
-<?php
 form('Add');
-echo "<a href='http://localhost'>Main page</a>";
-?>
-</body>
-</html>
