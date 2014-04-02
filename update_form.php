@@ -8,6 +8,7 @@
 require('db.php');
 require('filters.php');
 require('check_errors.php');
+require('form.php');
 
 function update_form($action, $id)
 {
@@ -25,91 +26,31 @@ function update_form($action, $id)
             header("Location: http://" . $_SERVER['SERVER_NAME']);
         }
     }
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <style>
-            p {
-                color: pink;
-            }
+    global $mysqli;
+    $stmt=$mysqli->prepare("SELECT * FROM Employee WHERE id=?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $row = array(
+        'id' => null,
+        'username' => null,
+        'Lastname' => null,
+        'hourlyRate' => null
+    );
+    $stmt->bind_result($row['id'], $row['username'], $row['Lastname'], $row['hourlyRate']);
+    $stmt->fetch();
 
-            p {
-                margin-top: 1px;
-                margin-bottom: 1px;
-            }
-        </style>
-    </head>
 
-    <body>
-    <?php
-    if (isset($status['success'])) {
-        echo $status['success'];
+    if(!isset($_POST['name'])){
+        $name_value = htmlspecialchars($row['username']);
+        $lastname_value = htmlspecialchars($row['Lastname']);
+        $rate_value = htmlspecialchars($row['hourlyRate']);
+    }else{
+        $name_value = htmlspecialchars($_POST['name']);
+        $lastname_value = htmlspecialchars($_POST['lastname']);
+        $rate_value = htmlspecialchars($_POST['rate']);
     }
-    ?>
-    <form method="post" action="">
-        <fieldset style="width:250px">
-            <legend><strong><?php echo $action; ?> employee</strong></legend>
-            <?php
-            global $mysqli;
-            $stmt=$mysqli->prepare("SELECT * FROM Employee WHERE id=?");
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $row = array(
-                'id' => null,
-                'username' => null,
-                'Lastname' => null,
-                'hourlyRate' => null
-            );
-            $stmt->bind_result($row['id'], $row['username'], $row['Lastname'], $row['hourlyRate']);
-            $stmt->fetch();
-            if (isset($status['name'])) {
-                $name_color = "red";
-            } else {
-                $name_color = "black";
-            }
-            ?>
-            <input type="text" name="name" style="border: 1px solid <?php echo $name_color; ?>" placeholder="Name"
-                   value="<?php if(!isset($_POST['name'])){ echo htmlspecialchars($row['username']);}else{ echo htmlspecialchars($_POST['name']);} ?>">
-            <?php
-            if (isset($status['name'])) {
-                echo $status['name'];
-            }
-            ?>
-            <?php
-            if (isset($status['lastname'])) {
-                $lastname_color = "red";
-            } else {
-                $lastname_color = "black";
-            }
-            ?>
-            <input type="text" name="lastname" style="border: 1px solid <?php echo $lastname_color; ?>"
-                   placeholder="Lastname" value="<?php if(!isset($_POST['lastname'])){ echo htmlspecialchars($row['Lastname']);}else{ echo htmlspecialchars($_POST['lastname']);} ?>">
-            <?php
-            if (isset($status['lastname'])) {
-                echo $status['lastname'];
-            }
-            ?>
-            <?php
-            if (isset($status['rate'])) {
-                $rate_color = "red";
-            } else {
-                $rate_color = "black";
-            }
-            ?>
-            <input type="double" name="rate" style="border: 1px solid <?php echo $rate_color; ?>"
-                   placeholder="Hourly rate" value="<?php if(!isset($_POST['rate'])){ echo htmlspecialchars($row['hourlyRate']);}else{ echo htmlspecialchars($_POST['rate']);} ?>">
-            <?php
-            if (isset($status['rate'])) {
-                echo $status['rate'];
-            }
-            ?>
-            <input type="submit" value="<?php echo $action; ?>">
-        </fieldset>
-    </form>
-    <a href='/'>Main page</a>
-    </body>
-    </html>
-<?php
+    if(empty($status)){
+        $status = null;
+    }
+    makeForm($action, $name_value, $lastname_value, $rate_value, $status);
 }

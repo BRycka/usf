@@ -10,11 +10,8 @@ if (isset($_POST['delete'])) {
     $id = $_POST['id'];
     $stmt = $mysqli->prepare("DELETE FROM Employee WHERE id = ?");
     $stmt->bind_param("i", $id);
-    if(!$stmt->execute()){
-        echo "delete failed";
-    } else {
-        echo "successfully deleted";
-        echo '<script> window.location="/"; </script> ';
+    if($stmt->execute()){
+        header("Location: http://" . $_SERVER['SERVER_NAME']);
     }
 }
 $orderBy = array('username', 'Lastname', 'hourlyRate');
@@ -30,6 +27,7 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     }
 }
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -45,16 +43,16 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 <table border="1" class="sortable">
     <thead>
     <tr>
-        <th><a href="?orderBy=username&direction=<?php echo $opositeDirection; ?>">Name</a></th>
-        <th><a href="?orderBy=Lastname&direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
-        <th><a href="?orderBy=hourlyRate&direction=<?php echo $opositeDirection; ?>">Hourly rate</a></th>
+        <th><a href="?orderBy=username&amp;direction=<?php echo $opositeDirection; ?>">Name</a></th>
+        <th><a href="?orderBy=Lastname&amp;direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
+        <th><a href="?orderBy=hourlyRate&amp;direction=<?php echo $opositeDirection; ?>">Hourly rate</a></th>
         <th class="sorttable_nosort">Update</th>
         <th class="sorttable_nosort">Delete</th>
     </tr>
     </thead>
     <?php
     $statment = $mysqli->stmt_init();
-    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' '.$dir);
+    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' ' . $dir);
     $statment->execute();
     $row = array(
         'id' => null,
@@ -81,6 +79,6 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
         </tbody>
     <?php } ?>
 </table>
-<a href="add_employee.php">--->>>Add new employee<<<---</a>
+<a href="add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
 </body>
 </html>
