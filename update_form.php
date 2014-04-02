@@ -36,9 +36,6 @@ function testing_numbers($data)
 
 function update_form($action, $id)
 {
-    global $mysqli;
-    $result = mysqli_query($mysqli, "SELECT * FROM Employee WHERE id=$id");
-    $row = mysqli_fetch_array($result);
     if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
         $status = array();
         $name = trim($_POST['name']);
@@ -69,6 +66,7 @@ function update_form($action, $id)
         if (count($data) > 2) {
             $status['error_twoNames'] = "<p>just two names possible</p>";
         }
+        global $mysqli;
         if (empty($status)) {
             $stmt = $mysqli->prepare("UPDATE Employee SET username=?, Lastname=?, hourlyRate=? WHERE id=?");
             $stmt->bind_param("ssdi", $name, $lastname, $rate, $id);
@@ -104,6 +102,18 @@ function update_form($action, $id)
         <fieldset style="width:250px">
             <legend><strong><?php echo $action; ?> employee</strong></legend>
             <?php
+            global $mysqli;
+            $stmt=$mysqli->prepare("SELECT * FROM Employee WHERE id=?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $row = array(
+                'id' => null,
+                'username' => null,
+                'Lastname' => null,
+                'hourlyRate' => null
+            );
+            $stmt->bind_result($row['id'], $row['username'], $row['Lastname'], $row['hourlyRate']);
+            $stmt->fetch();
             if (isset($status['error_name']) || isset($status['error_empty_name']) || isset($status['error_twoNames'])) {
                 $name_color = "red";
             } else {
