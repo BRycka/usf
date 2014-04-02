@@ -71,7 +71,7 @@ function update_form($action, $id)
             }
             ?>
             <input type="text" name="name" style="border: 1px solid <?php echo $name_color; ?>" placeholder="Name"
-                   value="<?php echo htmlspecialchars($row['username']); ?>">
+                   value="<?php if(!isset($_POST['name'])){ echo htmlspecialchars($row['username']);}else{ echo htmlspecialchars($_POST['name']);} ?>">
             <?php
             if (isset($status['name'])) {
                 echo $status['name'];
@@ -85,7 +85,7 @@ function update_form($action, $id)
             }
             ?>
             <input type="text" name="lastname" style="border: 1px solid <?php echo $lastname_color; ?>"
-                   placeholder="Lastname" value="<?php echo htmlspecialchars($row['Lastname']); ?>">
+                   placeholder="Lastname" value="<?php if(!isset($_POST['lastname'])){ echo htmlspecialchars($row['Lastname']);}else{ echo htmlspecialchars($_POST['lastname']);} ?>">
             <?php
             if (isset($status['lastname'])) {
                 echo $status['lastname'];
@@ -99,7 +99,7 @@ function update_form($action, $id)
             }
             ?>
             <input type="double" name="rate" style="border: 1px solid <?php echo $rate_color; ?>"
-                   placeholder="Hourly rate" value="<?php echo htmlspecialchars($row['hourlyRate']); ?>">
+                   placeholder="Hourly rate" value="<?php if(!isset($_POST['rate'])){ echo htmlspecialchars($row['hourlyRate']);}else{ echo htmlspecialchars($_POST['rate']);} ?>">
             <?php
             if (isset($status['rate'])) {
                 echo $status['rate'];
