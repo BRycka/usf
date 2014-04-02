@@ -20,8 +20,14 @@ if (isset($_POST['delete'])) {
 $orderBy = array('username', 'Lastname', 'hourlyRate');
 
 $order = 'username';
+$dir = 'asc';
+$opositeDirection = 'desc';
 if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     $order = $_GET['orderBy'];
+    if(isset($_GET['direction']) && $_GET['direction'] == 'desc'){
+        $dir = 'desc';
+        $opositeDirection = 'asc';
+    }
 }
 ?>
 <html>
@@ -39,16 +45,16 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 <table border="1" class="sortable">
     <thead>
     <tr>
-        <th><a href="?orderBy=username">Name</a></th>
-        <th><a href="?orderBy=Lastname">Lastname</a></th>
-        <th><a href="?orderBy=hourlyRate">Hourly rate</a></th>
+        <th><a href="?orderBy=username&direction=<?php echo $opositeDirection; ?>">Name</a></th>
+        <th><a href="?orderBy=Lastname&direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
+        <th><a href="?orderBy=hourlyRate&direction=<?php echo $opositeDirection; ?>">Hourly rate</a></th>
         <th class="sorttable_nosort">Update</th>
         <th class="sorttable_nosort">Delete</th>
     </tr>
     </thead>
     <?php
     $statment = $mysqli->stmt_init();
-    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order);
+    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' '.$dir);
     $statment->execute();
     $row = array(
         'id' => null,
