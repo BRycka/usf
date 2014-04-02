@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 25, 2014 at 05:21 PM
+-- Generation Time: Apr 02, 2014 at 04:38 PM
 -- Server version: 5.5.35
--- PHP Version: 5.3.10-1ubuntu3.10
+-- PHP Version: 5.5.10-1+deb.sury.org~precise+1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,26 +28,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `Employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(15) NOT NULL,
-  `Lastname` varchar(15) NOT NULL,
-  `hourlyRate` int(11) NOT NULL,
+  `name` varchar(15) CHARACTER SET utf8 NOT NULL,
+  `lastname` varchar(15) CHARACTER SET utf8 NOT NULL,
+  `hourlyRate` double NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `hourlyRate` (`hourlyRate`),
-  KEY `name` (`username`),
-  KEY `Lastname` (`Lastname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=212 ;
-
---
--- Dumping data for table `Employee`
---
-
-INSERT INTO `Employee` (`id`, `username`, `Lastname`, `hourlyRate`) VALUES
-(1, 'Darbuotojas', 'Aaaaaa', 6),
-(2, 'NaujasDarbuotoj', 'Eeeeee', 4),
-(3, 'Darbuotoja', 'Dddddd', 5),
-(4, 'NaujaDarbuotoja', 'Bbbbbb', 4),
-(101, 'Operatorius', 'Cccccc', 6),
-(211, 'dhdfg', 'dfhg', 1);
+  KEY `name` (`name`),
+  KEY `Lastname` (`lastname`),
+  KEY `hourlyRate_2` (`hourlyRate`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=159 ;
 
 -- --------------------------------------------------------
 
@@ -64,17 +52,7 @@ CREATE TABLE IF NOT EXISTS `HoursWorked` (
   KEY `employeeId` (`employeeId`,`payPeriodId`),
   KEY `payPeriodId` (`payPeriodId`),
   KEY `hoursWorked` (`hoursWorked`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `HoursWorked`
---
-
-INSERT INTO `HoursWorked` (`id`, `employeeId`, `payPeriodId`, `hoursWorked`) VALUES
-(3, 1, 1, 0),
-(4, 2, 1, 0),
-(5, 3, 2, 0),
-(6, 4, 1, 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -86,14 +64,7 @@ CREATE TABLE IF NOT EXISTS `PayPeriod` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fourWeeks` varchar(7) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `PayPeriod`
---
-
-INSERT INTO `PayPeriod` (`id`, `fourWeeks`) VALUES
-(1, '2014-12');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -110,16 +81,6 @@ CREATE TABLE IF NOT EXISTS `Position` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
---
--- Dumping data for table `Position`
---
-
-INSERT INTO `Position` (`id`, `name`, `weightingFactor`) VALUES
-(1, 'Operator', 5),
-(2, 'Supervisor', 5),
-(3, 'quality', 5),
-(4, 'designer', 5);
-
 -- --------------------------------------------------------
 
 --
@@ -135,16 +96,7 @@ CREATE TABLE IF NOT EXISTS `Schedule` (
   KEY `employeeId` (`employeeId`),
   KEY `shiftId` (`shiftId`),
   KEY `week` (`week`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `Schedule`
---
-
-INSERT INTO `Schedule` (`id`, `employeeId`, `shiftId`, `week`) VALUES
-(1, 1, 1, '2014-13'),
-(2, 2, 3, '2014-15'),
-(3, 3, 4, '2014-14');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -159,17 +111,7 @@ CREATE TABLE IF NOT EXISTS `Shift` (
   PRIMARY KEY (`id`),
   KEY `positionId` (`positionId`,`employeeId`),
   KEY `employeeId` (`employeeId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `Shift`
---
-
-INSERT INTO `Shift` (`id`, `positionId`, `employeeId`) VALUES
-(1, 1, 1),
-(2, 1, 3),
-(3, 3, 4),
-(4, 4, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Constraints for dumped tables

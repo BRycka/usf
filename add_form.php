@@ -18,11 +18,18 @@ function form($action)
         $status = check($name, $lastname, $rate);
         if (empty($status)) {
             global $mysqli;
-            $stmt = $mysqli->prepare("INSERT INTO Employee (username, Lastname, hourlyRate) VALUES (?,?,? )");
+            $stmt = $mysqli->prepare("INSERT INTO Employee (`name`, lastname, hourlyRate) VALUES (?,?,? )");
             $stmt->bind_param("ssd", $name, $lastname, $rate);
             $stmt->execute();
             $stmt->close();
             header("Location: http://" . $_SERVER['SERVER_NAME']);
+        }
+        global $mysqli;
+        $result = mysqli_query($mysqli, "SELECT name, lastname FROM Employee");
+        while($row=mysqli_fetch_array($result)){
+            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
+                $status['exist']="<p>Employee with this name and lastname already exists</p>";
+            }
         }
     }
     $name_value = null;

@@ -19,7 +19,7 @@ function update_form($action, $id)
         $status = check($name, $lastname, $rate);
         if (empty($status)) {
             global $mysqli;
-            $stmt = $mysqli->prepare("UPDATE Employee SET username=?, Lastname=?, hourlyRate=? WHERE id=?");
+            $stmt = $mysqli->prepare("UPDATE Employee SET `name`=?, lastname=?, hourlyRate=? WHERE id=?");
             $stmt->bind_param("ssdi", $name, $lastname, $rate, $id);
             $stmt->execute();
             $stmt->close();
@@ -32,17 +32,15 @@ function update_form($action, $id)
     $stmt->execute();
     $row = array(
         'id' => null,
-        'username' => null,
-        'Lastname' => null,
+        'name' => null,
+        'lastname' => null,
         'hourlyRate' => null
     );
-    $stmt->bind_result($row['id'], $row['username'], $row['Lastname'], $row['hourlyRate']);
+    $stmt->bind_result($row['id'], $row['name'], $row['lastname'], $row['hourlyRate']);
     $stmt->fetch();
-
-
     if(!isset($_POST['name'])){
-        $name_value = htmlspecialchars($row['username']);
-        $lastname_value = htmlspecialchars($row['Lastname']);
+        $name_value = htmlspecialchars($row['name']);
+        $lastname_value = htmlspecialchars($row['lastname']);
         $rate_value = htmlspecialchars($row['hourlyRate']);
     }else{
         $name_value = htmlspecialchars($_POST['name']);

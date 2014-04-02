@@ -26,6 +26,13 @@ function makeForm($action, $name, $lastname, $rate, $status)
     </head>
 
     <body>
+    <?php
+        if(isset($status['exist'])){
+            echo $status['exist'];
+        }else{
+            echo "nera";
+        }
+    ?>
     <form method="post" action="">
         <fieldset style="width:250px">
             <legend><strong><?php echo $action; ?> employee</strong></legend>
@@ -51,7 +58,7 @@ function makeForm($action, $name, $lastname, $rate, $status)
             }
             ?>
             <input type="text" name="lastname" style="border: 1px solid <?php echo $lastname_color; ?>"
-                   placeholder="Lastname" value="<?php echo $lastname; ?>">
+                   placeholder="lastname" value="<?php echo $lastname; ?>">
             <?php
             if (isset($status['lastname'])) {
                 echo $status['lastname'];

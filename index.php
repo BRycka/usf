@@ -14,9 +14,9 @@ if (isset($_POST['delete'])) {
         header("Location: http://" . $_SERVER['SERVER_NAME']);
     }
 }
-$orderBy = array('username', 'Lastname', 'hourlyRate');
+$orderBy = array('name', 'lastname', 'hourlyRate');
 
-$order = 'username';
+$order = 'name';
 $dir = 'asc';
 $opositeDirection = 'desc';
 if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
@@ -43,8 +43,8 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 <table border="1" class="sortable">
     <thead>
     <tr>
-        <th><a href="?orderBy=username&amp;direction=<?php echo $opositeDirection; ?>">Name</a></th>
-        <th><a href="?orderBy=Lastname&amp;direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
+        <th><a href="?orderBy=name&amp;direction=<?php echo $opositeDirection; ?>">Name</a></th>
+        <th><a href="?orderBy=lastname&amp;direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
         <th><a href="?orderBy=hourlyRate&amp;direction=<?php echo $opositeDirection; ?>">Hourly rate</a></th>
         <th class="sorttable_nosort">Update</th>
         <th class="sorttable_nosort">Delete</th>
@@ -56,17 +56,17 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     $statment->execute();
     $row = array(
         'id' => null,
-        'username' => null,
-        'Lastname' => null,
+        'name' => null,
+        'lastname' => null,
         'hourlyRate' => null
     );
-    $statment->bind_result($row['id'], $row['username'], $row['Lastname'], $row['hourlyRate']);
+    $statment->bind_result($row['id'], $row['name'], $row['lastname'], $row['hourlyRate']);
     while ($statment->fetch()) {
         ?>
         <tbody>
         <tr>
-            <td><?php echo $row['username']; ?></td>
-            <td><?php echo $row['Lastname']; ?></td>
+            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['lastname']; ?></td>
             <td><?php echo $row['hourlyRate']; ?></td>
             <td><a href="update_employee.php?id=<?php echo $row['id'] ?>">Update</a></td>
             <td>
