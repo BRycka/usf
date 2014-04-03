@@ -5,7 +5,40 @@
  * Date: 02/04/14
  * Time: 12:04
  */
-function check($name, $lastname, $rate){
+function checkExistUpdate(){
+    global $mysqli;
+    $result = mysqli_query($mysqli, "SELECT id, name, lastname FROM Employee");
+    while($row=mysqli_fetch_array($result)){
+        if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']){
+            return "<p>Employee with this name and lastname already exists</p>";
+        }
+    }
+    return null;
+}
+function status(){
+    if(isset($_GET['status'])){
+        if($_GET['status'] == 'updated'){
+            echo "successfully updated";
+        }
+        if($_GET['status'] == 'added'){
+            echo "successfully added";
+        }
+        if($_GET['status'] == 'deleted'){
+            echo "successfully deleted";
+        }
+    }
+}
+function checkExistAdd(){
+    global $mysqli;
+    $result = mysqli_query($mysqli, "SELECT name, lastname FROM Employee");
+    while($row=mysqli_fetch_array($result)){
+        if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
+            return "<p>Employee with this name and lastname already exists</p>";
+        }
+    }
+    return null;
+}
+function checkForm($name, $lastname, $rate){
     $status = array();
     //name errors
     if ($name !== '') {

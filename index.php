@@ -6,12 +6,13 @@
  * Time: 10:12
  */
 require('db.php');
+require('check_errors.php');
 if (isset($_POST['delete'])) {
     $id = $_POST['id'];
     $stmt = $mysqli->prepare("DELETE FROM Employee WHERE id = ?");
     $stmt->bind_param("i", $id);
     if($stmt->execute()){
-        header("Location: http://" . $_SERVER['SERVER_NAME']);
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=deleted");
     }
 }
 $orderBy = array('name', 'lastname', 'hourlyRate');
@@ -26,6 +27,7 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
         $opositeDirection = 'asc';
     }
 }
+echo status();
 ?>
 <!DOCTYPE html>
 <html>

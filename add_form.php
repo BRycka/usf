@@ -15,21 +15,25 @@ function form($action)
         $name = trim($_POST['name']);
         $lastname = trim($_POST['lastname']);
         $rate = trim($_POST['rate']);
-        $status = check($name, $lastname, $rate);
+        $status = checkForm($name, $lastname, $rate);
+        if(checkExistAdd() != null){
+            $status['exist'] = checkExistAdd();
+        }
+        global $mysqli;
+        $result = mysqli_query($mysqli, "SELECT name, lastname FROM Employee");
+        while($row=mysqli_fetch_array($result)){
+            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
+                $status['exist'] = "<p>Employee with this name and lastname already exists</p>";
+            }
+        }
+
         if (empty($status)) {
             global $mysqli;
             $stmt = $mysqli->prepare("INSERT INTO Employee (`name`, lastname, hourlyRate) VALUES (?,?,? )");
             $stmt->bind_param("ssd", $name, $lastname, $rate);
             $stmt->execute();
             $stmt->close();
-            header("Location: http://" . $_SERVER['SERVER_NAME']);
-        }
-        global $mysqli;
-        $result = mysqli_query($mysqli, "SELECT name, lastname FROM Employee");
-        while($row=mysqli_fetch_array($result)){
-            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
-                $status['exist']="<p>Employee with this name and lastname already exists</p>";
-            }
+            header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=added");
         }
     }
     $name_value = null;

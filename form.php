@@ -29,8 +29,6 @@ function makeForm($action, $name, $lastname, $rate, $status)
     <?php
         if(isset($status['exist'])){
             echo $status['exist'];
-        }else{
-            echo "nera";
         }
     ?>
     <form method="post" action="">

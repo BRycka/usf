@@ -16,14 +16,17 @@ function update_form($action, $id)
         $name = trim($_POST['name']);
         $lastname = trim($_POST['lastname']);
         $rate = trim($_POST['rate']);
-        $status = check($name, $lastname, $rate);
+        $status = checkForm($name, $lastname, $rate);
+        if(checkExistUpdate($status) != null ){
+            $status['exist'] = checkExistUpdate();
+        }
         if (empty($status)) {
             global $mysqli;
             $stmt = $mysqli->prepare("UPDATE Employee SET `name`=?, lastname=?, hourlyRate=? WHERE id=?");
             $stmt->bind_param("ssdi", $name, $lastname, $rate, $id);
             $stmt->execute();
             $stmt->close();
-            header("Location: http://" . $_SERVER['SERVER_NAME']);
+            header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=updated");
         }
     }
     global $mysqli;
