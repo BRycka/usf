@@ -7,4 +7,4 @@
  *
  */
 require('add_form.php');
-form('Add');
+addEmployeeForm('Add');

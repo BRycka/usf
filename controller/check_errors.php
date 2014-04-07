@@ -5,12 +5,20 @@
  * Date: 02/04/14
  * Time: 12:04
  */
-function checkExistUpdate(){
-    global $mysqli;
-    $result = mysqli_query($mysqli, "SELECT id, name, lastname FROM Employee");
+require('filters.php');
+
+function checkExist(){
+    $mysqli = connectToDb();
+    $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
     while($row=mysqli_fetch_array($result)){
-        if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']){
-            return "<p>Employee with this name and lastname already exists</p>";
+        if(isset($_GET['id'])){
+            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']){
+                return "<p>Employee with this name and lastname already exists</p>";
+            }
+        }else{
+            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
+                return "<p>Employee with this name and lastname already exists</p>";
+            }
         }
     }
     return null;
@@ -27,16 +35,6 @@ function status(){
             echo "successfully deleted";
         }
     }
-}
-function checkExistAdd(){
-    global $mysqli;
-    $result = mysqli_query($mysqli, "SELECT name, lastname FROM Employee");
-    while($row=mysqli_fetch_array($result)){
-        if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
-            return "<p>Employee with this name and lastname already exists</p>";
-        }
-    }
-    return null;
 }
 function checkForm($name, $lastname, $rate){
     $status = array();

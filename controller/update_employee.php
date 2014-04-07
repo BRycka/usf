@@ -7,4 +7,4 @@
  */
 require('update_form.php');
 $id = $_GET['id'];
-update_form('Update', $id);
+updateEmployeeForm('Update', $id);

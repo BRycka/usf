@@ -5,7 +5,6 @@
  * Date: 02/04/14
  * Time: 14:24
  */
-
 function makeForm($action, $name, $lastname, $rate, $status)
 {
     ?>
@@ -110,42 +109,12 @@ function makeList($opositeDirection, $dir, $order){
         </tr>
         </thead>
         <?php
-        //global $mysqli;
-        $con = new dataBase();
-//        var_dump($con);
-        $con->connect();
-        global $mysqli;
-
-        $statment = $mysqli->stmt_init();
-        $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' ' . $dir);
-        $statment->execute();
-        $row = array(
-            'id' => null,
-            'name' => null,
-            'lastname' => null,
-            'hourlyRate' => null
-        );
-        $statment->bind_result($row['id'], $row['name'], $row['lastname'], $row['hourlyRate']);
-        while ($statment->fetch()) {
-            ?>
-            <tbody>
-            <tr>
-                <td><?php echo $row['name']; ?></td>
-                <td><?php echo $row['lastname']; ?></td>
-                <td><?php echo $row['hourlyRate']; ?></td>
-                <td><a href="model/update_employee.php?id=<?php echo $row['id'] ?>">Update</a></td>
-                <td>
-                    <form method="post" action="/" style="margin-bottom: 0px;">
-                        <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-                        <input type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure you want to delete?');">
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        <?php } ?>
+        getAllEmployeeList($order, $dir);
+        ?>
     </table>
-    <a href="model/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
+    <a href="controller/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
     </body>
     </html>
 <?php }
+
 
