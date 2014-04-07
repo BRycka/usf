@@ -5,10 +5,10 @@
  * Date: 31/03/14
  * Time: 11:57
  */
-require('db.php');
+require('../controller/db.php');
 require('filters.php');
 require('check_errors.php');
-require('form.php');
+require('../view/form.php');
 function form($action)
 {
     if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
