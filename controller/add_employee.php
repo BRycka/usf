@@ -8,13 +8,17 @@
 require('../model/db.php');
 require('check_errors.php');
 $action = 'Add';
+$id = null;
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+}
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
     $status = checkForm($name, $lastname, $rate);
-    if (checkExist() != null) {
-        $status['exist'] = checkExist();
+    if (checkExist($id) != null) {
+        $status['exist'] = checkExist($id);
     }
     if (empty($status)) {
         addEmployee($name, $lastname, $rate);

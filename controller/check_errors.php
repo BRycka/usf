@@ -33,19 +33,18 @@ function testing_numbers($data)
     return true;
 }
 
-function checkExist()
+function checkExist($id)
 {
     $rows = getAllEmployee();
     foreach($rows as $row)
-        if (isset($_GET['id'])) {
-            if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']) {
+        if ($id !== null) {
+            if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $id !== $row['id']) {
                 return "<p>Employee with this name and lastname already exists</p>";
             }
         } else {
             if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']) {
                 return "<p>Employee with this name and lastname already exists</p>";
             }
-
 }
     return null;
 }
