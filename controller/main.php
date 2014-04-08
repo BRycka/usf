@@ -7,8 +7,11 @@
  */
 require('model/db.php');
 require('check_errors.php');
+if (isset($_POST['id'])){
+    $id = $_POST['id'];
+}
 if (isset($_POST['delete'])) {
-    deleteEmployee();
+    deleteEmployee($id);
     header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=deleted");
 }
 $orderBy = array('name', 'lastname', 'hourlyRate');

@@ -116,9 +116,8 @@ function addEmployee($name, $lastname, $rate)
 /**
  * deleting employee
  */
-function deleteEmployee()
+function deleteEmployee($id)
 {
-    $id = $_POST['id'];
     $mysqli = connectToDb();
     $stmt = $mysqli->prepare("DELETE FROM Employee WHERE id = ?");
     $stmt->bind_param("i", $id);
