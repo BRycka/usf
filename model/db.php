@@ -25,7 +25,7 @@ function connectToDb()
  * @param $dir
  * getting all employee list
  */
-function getAllEmployeeList($order, $dir)
+function getOrderedEmployeeList($order, $dir)
 {
     $list = [];
     $mysqli = connectToDb();
@@ -123,4 +123,13 @@ function deleteEmployee($id)
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
+}
+function getAllEmployee(){
+    $mysqli = connectToDb();
+    $employee = [];
+    $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
+    while ($row = mysqli_fetch_array($result)) {
+        $employee[] = $row;
+    }
+    return $employee;
 }

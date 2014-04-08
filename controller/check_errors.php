@@ -35,9 +35,8 @@ function testing_numbers($data)
 
 function checkExist()
 {
-    $mysqli = connectToDb();
-    $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
-    while ($row = mysqli_fetch_array($result)) {
+    $rows = getAllEmployee();
+    foreach($rows as $row)
         if (isset($_GET['id'])) {
             if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']) {
                 return "<p>Employee with this name and lastname already exists</p>";
@@ -46,8 +45,8 @@ function checkExist()
             if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']) {
                 return "<p>Employee with this name and lastname already exists</p>";
             }
-        }
-    }
+
+}
     return null;
 }
 

@@ -25,6 +25,6 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
         $opositeDirection = 'asc';
     }
 }
-$list = getAllEmployeeList($order, $dir);
+$list = getOrderedEmployeeList($order, $dir);
 status();
 require('view/makeList.php');
