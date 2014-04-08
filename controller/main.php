@@ -26,5 +26,5 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     }
 }
 $list = getOrderedEmployeeList($order, $dir);
-status();
+getActionStatuts();
 require('view/makeList.php');

@@ -8,21 +8,19 @@
 require('../model/db.php');
 require('check_errors.php');
 $action = 'Add';
-$id = null;
-if(isset($_GET['id'])){
-    $id = $_GET['id'];
-}
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
-    $status = checkForm($name, $lastname, $rate);
-    if (checkExist($id, $name, $lastname) != null) {
-        $status['exist'] = checkExist($id, $name, $lastname);
+    $status = checkFormErrors($name, $lastname, $rate);
+    $employeeExistStatus = checkEmployeeExist($name, $lastname);
+    var_dump($employeeExistStatus);
+    if ($employeeExistStatus != null) {
+        $status['exist'] = $employeeExistStatus;
     }
     if (empty($status)) {
         addEmployee($name, $lastname, $rate);
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=added");
+        //header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=added");
     }
 }
 $name_value = null;

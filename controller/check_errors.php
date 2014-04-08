@@ -33,23 +33,31 @@ function testing_numbers($data)
     return true;
 }
 
-function checkExist($id, $name, $lastname)
+function checkEmployeeExist($name, $lastname, $id = null)
 {
-    $rows = getEmployee();
-    foreach($rows as $row)
-        if ($id !== null) {
-            if ($name == $row['name'] && $lastname == $row['lastname'] && $id !== $row['id']) {
-                return "<p>Employee with this name and lastname already exists</p>";
-            }
-        } else {
-            if ($name == $row['name'] && $lastname == $row['lastname']) {
-                return "<p>Employee with this name and lastname already exists</p>";
-            }
-}
+//    var_dump(getEmployee($name, $lastname, $id));
+    $list = getEmployee($name, $lastname, $id);
+    var_dump($list);
+    if($list !== NULL){
+        return "<p>Employee with this name and lastname already exists</p>";
+    }
+
+//    $rows = getEmployee($name, $lastname);
+//    foreach($rows as $row):
+//        if ($id !== null) {
+//            if ($name == $row['name'] && $lastname == $row['lastname'] && $id !== $row['id']) {
+//                return "<p>Employee with this name and lastname already exists</p>";
+//            }
+//        } else {
+//            if ($name == $row['name'] && $lastname == $row['lastname']) {
+//                return "<p>Employee with this name and lastname already exists</p>";
+//            }
+//}
+//    endforeach;
     return null;
 }
 
-function status()
+function getActionStatuts()
 {
     if (isset($_GET['status'])) {
         if ($_GET['status'] == 'updated') {
@@ -64,7 +72,7 @@ function status()
     }
 }
 
-function checkForm($name, $lastname, $rate)
+function checkFormErrors($name, $lastname, $rate)
 {
     $status = array();
     //name errors

@@ -124,12 +124,31 @@ function deleteEmployee($id)
     $stmt->execute();
     $stmt->close();
 }
-function getEmployee(){
+function getEmployee($name, $lastname, $id){
     $mysqli = connectToDb();
-    $employee = [];
-    $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
-    while ($row = mysqli_fetch_array($result)) {
-        $employee[] = $row;
+//    $employee = [];
+//    $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
+    $stmt = $mysqli->prepare("SELECT id, name, lastname FROM Employee WHERE `name` = ? AND `lastname` = ? AND `id` = ? ");
+    $stmt->bind_param("ssi", $name, $lastname, $id);
+    $stmt->execute();
+    $row = array(
+        'id' => null,
+        'name' => null,
+        'lastname' => null,
+    );
+    $stmt->bind_result($row['id'], $row['name'], $row['lastname']);
+    while ($stmt->fetch()) {
+        $list = array(
+            'id' => $row['id'],
+            'name' => $row['name'],
+            'lastname' => $row['lastname'],
+        );
     }
-    return $employee;
+    $stmt->close();
+    return $list;
+//    return $stmt->execute();
+//    while ($row = mysqli_fetch_array($result)) {
+//        $employee[] = $row;
+//    }
+//    return $employee;
 }

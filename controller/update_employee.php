@@ -16,13 +16,14 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
-    $status = checkForm($name, $lastname, $rate);
-    if (checkExist($id, $name, $lastname) != null) {
-        $status['exist'] = checkExist($id, $name, $lastname);
+    $status = checkFormErrors($name, $lastname, $rate);
+    $employeeExistStatus = checkEmployeeExist($name, $lastname, $id);
+    if ($employeeExistStatus != null) {
+        $status['exist'] = $employeeExistStatus;
     }
     if (empty($status)) {
         updateEmployee($name, $lastname, $rate, $id);
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=updated");
+        //header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=updated");
     }
 }
 if (empty($status)) {
