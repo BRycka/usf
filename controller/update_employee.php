@@ -7,8 +7,7 @@
  */
 require('../model/db.php');
 require('check_errors.php');
-require('../view/makeForm.php');
-
+$action = 'Update';
 $id = $_GET['id'];
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
@@ -28,12 +27,12 @@ if (empty($status)) {
 }
 $employee = getEmployeeById($id);
 if (!isset($_POST['name'])) {
-    $employee['name'] = htmlspecialchars($employee['name']);
-    $employee['lastname'] = htmlspecialchars($employee['lastname']);
-    $employee['hourlyRate'] = htmlspecialchars($employee['hourlyRate']);
+    $name_value = htmlspecialchars($employee['name']);
+    $lastname_value = htmlspecialchars($employee['lastname']);
+    $rate_value = htmlspecialchars($employee['hourlyRate']);
 } else {
-    $employee['name'] = htmlspecialchars($_POST['name']);
-    $employee['lastname'] = htmlspecialchars($_POST['lastname']);
-    $employee['hourlyRate'] = htmlspecialchars($_POST['rate']);
+    $name_value = htmlspecialchars($_POST['name']);
+    $lastname_value = htmlspecialchars($_POST['lastname']);
+    $rate_value = htmlspecialchars($_POST['rate']);
 }
-makeForm('Update', $employee['name'], $employee['lastname'], $employee['hourlyRate'], $status);
+require('../view/makeForm.php');

@@ -7,7 +7,7 @@
  */
 require('../model/db.php');
 require('check_errors.php');
-require('../view/makeForm.php');
+$action = 'Add';
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
@@ -32,4 +32,4 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
 if (empty($status)) {
     $status = null;
 }
-makeForm('Add', $name_value, $lastname_value, $rate_value, $status);
+require('../view/makeForm.php');

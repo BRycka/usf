@@ -7,7 +7,6 @@
  */
 require('model/db.php');
 require('check_errors.php');
-require('view/makeList.php');
 if (isset($_POST['delete'])) {
     deleteEmployee();
     header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=deleted");
@@ -25,5 +24,4 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 }
 $list = getAllEmployeeList($order, $dir);
 status();
-makeList($opositeDirection, $dir, $order);
-
+require('view/makeList.php');
