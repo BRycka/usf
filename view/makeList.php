@@ -14,7 +14,6 @@
     </tr>
     </thead>
     <?php
-    global $list;
     foreach ($list as $row):
         ?>
         <tbody>
