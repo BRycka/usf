@@ -5,38 +5,69 @@
  * Date: 02/04/14
  * Time: 12:04
  */
-require('filters.php');
+function testing_letters($data)
+{
+    $masyvas = array('A', 'a', 'Ą', 'ą', 'B', 'b', 'C', 'c', 'Č', 'č', 'D', 'd', 'E', 'e', 'Ę', 'ę',
+        'Ė', 'ė', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'Į', 'į', 'Y', 'y', 'J', 'j',
+        'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'R', 'r', 'S', 's',
+        'Š', 'š', 'T', 't', 'U', 'u', 'Ų', 'ų', 'Ū', 'ū', 'V', 'v', 'Z', 'z', 'Ž', 'ž', ' ');
+    $count = mb_strlen($data, 'utf-8') - 1;
+    for ($i = 0; $i <= $count; $i++) {
+        if (array_search(mb_substr($data, $i, 1, 'utf-8'), $masyvas) === false) {
+            return false;
+        }
+    }
+    return true;
+}
 
-function checkExist(){
+function testing_numbers($data)
+{
+    $masyvas = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.');
+    $masyvas = array_fill_keys($masyvas, true);
+    $count = strlen($data) - 1;
+    for ($i = 0; $i <= $count; $i++) {
+        if (!array_key_exists($data[$i], $masyvas)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function checkExist()
+{
     $mysqli = connectToDb();
     $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
-    while($row=mysqli_fetch_array($result)){
-        if(isset($_GET['id'])){
-            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']){
+    while ($row = mysqli_fetch_array($result)) {
+        if (isset($_GET['id'])) {
+            if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname'] && $_GET['id'] !== $row['id']) {
                 return "<p>Employee with this name and lastname already exists</p>";
             }
-        }else{
-            if($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']){
+        } else {
+            if ($_POST['name'] == $row['name'] && $_POST['lastname'] == $row['lastname']) {
                 return "<p>Employee with this name and lastname already exists</p>";
             }
         }
     }
     return null;
 }
-function status(){
-    if(isset($_GET['status'])){
-        if($_GET['status'] == 'updated'){
+
+function status()
+{
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] == 'updated') {
             echo "successfully updated";
         }
-        if($_GET['status'] == 'added'){
+        if ($_GET['status'] == 'added') {
             echo "successfully added";
         }
-        if($_GET['status'] == 'deleted'){
+        if ($_GET['status'] == 'deleted') {
             echo "successfully deleted";
         }
     }
 }
-function checkForm($name, $lastname, $rate){
+
+function checkForm($name, $lastname, $rate)
+{
     $status = array();
     //name errors
     if ($name !== '') {
@@ -45,10 +76,10 @@ function checkForm($name, $lastname, $rate){
             if (count($data) > 2) {
                 $status['name'] = "<p>just two names possible</p>";
             }
-        }else{
+        } else {
             $status['name'] = "<p>incorrect name field</p>";
         }
-    }else{
+    } else {
         $status['name'] = "<p>missing data in this field</p>";
     }
     //lastname errors
@@ -56,7 +87,7 @@ function checkForm($name, $lastname, $rate){
         if (testing_letters($lastname) == false) {
             $status['lastname'] = "<p>incorrect lastname field</p>";
         }
-    }else{
+    } else {
         $status['lastname'] = "<p>missing data in this field</p>";
     }
     //rate errors
@@ -65,10 +96,10 @@ function checkForm($name, $lastname, $rate){
             if ($rate <= 0) {
                 $status['rate'] = "<p>rate must be > 0</p>";
             }
-        }else{
+        } else {
             $status['rate'] = "<p>incorrect rate field</p>";
         }
-    }else{
+    } else {
         $status['rate'] = "<p>missing data in this field</p>";
     }
     return $status;

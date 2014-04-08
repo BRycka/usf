@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: ricblt
- * Date: 02/04/14
- * Time: 14:24
+ * Date: 08/04/14
+ * Time: 11:25
  */
 function makeForm($action, $name, $lastname, $rate, $status)
 {
@@ -26,9 +26,9 @@ function makeForm($action, $name, $lastname, $rate, $status)
 
     <body>
     <?php
-        if(isset($status['exist'])){
-            echo $status['exist'];
-        }
+    if (isset($status['exist'])) {
+        echo $status['exist'];
+    }
     ?>
     <form method="post" action="">
         <fieldset style="width:250px">
@@ -82,39 +82,3 @@ function makeForm($action, $name, $lastname, $rate, $status)
     </body>
     </html>
 <?php }
-
-function makeList($opositeDirection, $dir, $order){
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <style>
-            table.sortable th:after {
-                content: " \25B4\25BE";
-            }
-            table.sortable th.sorttable_nosort:after{
-                content: "";
-            }
-        </style>
-    </head>
-    <body>
-    <table border="1" class="sortable">
-        <thead>
-        <tr>
-            <th><a href="?orderBy=name&amp;direction=<?php echo $opositeDirection; ?>">Name</a></th>
-            <th><a href="?orderBy=lastname&amp;direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
-            <th><a href="?orderBy=hourlyRate&amp;direction=<?php echo $opositeDirection; ?>">Hourly rate</a></th>
-            <th class="sorttable_nosort">Update</th>
-            <th class="sorttable_nosort">Delete</th>
-        </tr>
-        </thead>
-        <?php
-        getAllEmployeeList($order, $dir);
-        ?>
-    </table>
-    <a href="controller/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
-    </body>
-    </html>
-<?php }
-
-
