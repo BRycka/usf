@@ -17,8 +17,8 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
     $status = checkForm($name, $lastname, $rate);
-    if (checkExist($id) != null) {
-        $status['exist'] = checkExist($id);
+    if (checkExist($id, $name, $lastname) != null) {
+        $status['exist'] = checkExist($id, $name, $lastname);
     }
     if (empty($status)) {
         addEmployee($name, $lastname, $rate);

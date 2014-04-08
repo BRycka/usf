@@ -124,7 +124,7 @@ function deleteEmployee($id)
     $stmt->execute();
     $stmt->close();
 }
-function getAllEmployee(){
+function getEmployee(){
     $mysqli = connectToDb();
     $employee = [];
     $result = $mysqli->query("SELECT id, name, lastname FROM Employee");
