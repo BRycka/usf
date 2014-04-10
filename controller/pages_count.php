@@ -5,20 +5,16 @@
  * Date: 10/04/14
  * Time: 13:36
  */
-function pagesCount($limit){
+function pagesCount($limit, $page, $employeeCount){
     $result = [];
     $result['isBackButton'] = false;
     $result['isNextButton'] = false;
-    $result['page'] = 0;
+    $result['page'] = $page;
 
-    $employeeCount = getAllEmployeeCount();
     $result['pagesCount'] = ceil($employeeCount / $limit);
-    if(isset($_GET['page'])){
-        $result['page'] = (int)$_GET['page'];
-    }
+
     if ($result['page'] < 0 || $result['page'] >= $result['pagesCount']) {
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?page=0&status=badId");
-        return;
+        return false;
     }
     if($result['page'] < $result['pagesCount']-1){
         $result['isNextButton'] = true;

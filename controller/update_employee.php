@@ -8,7 +8,10 @@
 require('../model/db.php');
 require('check_errors.php');
 $action = 'Update';
-$id = null;
+if(!isset($_GET['id']) || !($employee = getEmployeeById($_GET['id'])) || $employee['id'] == 0) {
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=notExist");
+    return;
+}
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']) && isset($_GET['id'])) {
     $id = $_GET['id'];
     $name = trim($_POST['name']);
@@ -24,19 +27,15 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']) 
 if (empty($status)) {
     $status = null;
 }
-$employee = getEmployeeById($id);
-if ($employee['id'] != 0) {
-    if (!isset($_POST['name'])) {
-        $name_value = htmlspecialchars($employee['name']);
-        $lastname_value = htmlspecialchars($employee['lastname']);
-        $rate_value = htmlspecialchars($employee['hourlyRate']);
-    } else {
-        $name_value = htmlspecialchars($_POST['name']);
-        $lastname_value = htmlspecialchars($_POST['lastname']);
-        $rate_value = htmlspecialchars($_POST['rate']);
-    }
-    require('../view/makeForm.php');
+
+if (!isset($_POST['name'])) {
+    $name_value = htmlspecialchars($employee['name']);
+    $lastname_value = htmlspecialchars($employee['lastname']);
+    $rate_value = htmlspecialchars($employee['hourlyRate']);
 } else {
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=notExist");
+    $name_value = htmlspecialchars($_POST['name']);
+    $lastname_value = htmlspecialchars($_POST['lastname']);
+    $rate_value = htmlspecialchars($_POST['rate']);
 }
 
+require('../view/makeForm.php');

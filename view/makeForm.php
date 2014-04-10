@@ -68,6 +68,6 @@ if (isset($status['exist'])) {
         <input type="submit" value="<?php echo $action; ?>">
     </fieldset>
 </form>
-<a href='http://localhost'>Main page</a>
+<a href='/'>Main page</a>
 </body>
 </html>

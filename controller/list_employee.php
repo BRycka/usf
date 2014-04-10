@@ -29,7 +29,15 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 $offset = 0;
 $limit = 10;
 $page = 0;
-$test = pagesCount($limit);
+$employeeCount = getAllEmployeeCount();
+if(isset($_GET['page'])){
+    $page = (int)$_GET['page'];
+}
+$test = pagesCount($limit, $page, $employeeCount);
+if(!$test){
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?page=0&status=badId");
+    return;
+}
 extract($test);
 $list = getOrderedEmployeeList($order, $dir, $limit, $offset);
 $action = getActionStatuts();
