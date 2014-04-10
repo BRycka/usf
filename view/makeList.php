@@ -7,9 +7,15 @@
 <table border="1">
     <thead>
     <tr>
+        <?php if(isset($_GET['page'])){?>
+            <th><a href="?orderBy=name&amp;direction=<?php echo $opositeDirection;?>&amp;page=<?php echo $_GET['page']?>">Name</a></th>
+            <th><a href="?orderBy=lastname&amp;direction=<?php echo $opositeDirection; ?>&amp;page=<?php echo $_GET['page']?>">Lastname</a></th>
+            <th><a href="?orderBy=hourlyRate&amp;direction=<?php echo $opositeDirection; ?>&amp;page=<?php echo $_GET['page']?>">Hourly rate</a></th>
+        <?php }else{?>
         <th><a href="?orderBy=name&amp;direction=<?php echo $opositeDirection; ?>">Name</a></th>
         <th><a href="?orderBy=lastname&amp;direction=<?php echo $opositeDirection; ?>">Lastname</a></th>
         <th><a href="?orderBy=hourlyRate&amp;direction=<?php echo $opositeDirection; ?>">Hourly rate</a></th>
+        <?php }?>
         <th>Update</th>
         <th>Delete</th>
     </tr>
@@ -34,13 +40,22 @@
         </tbody>
     <?php endforeach; ?>
 </table>
-<?php if ($isBackButton) { ?>
+<?php if(isset($_GET['orderBy'])){
+    if ($isBackButton) { ?>
+        <a href="?orderBy=<?php echo $_GET['orderBy']?>&amp;direction=<?php echo $_GET['direction'];?>&amp;page=<?php echo $back; ?>">back</a>
+    <?php } ?>
+    <?php echo $page + 1; ?> from <?php echo $pagesCount; ?> pages
+    <?php if ($isNextButton) { ?>
+        <a href="?orderBy=<?php echo $_GET['orderBy']?>&amp;direction=<?php echo $_GET['direction'];?>&amp;page=<?php echo $next; ?>">next</a>
+
+    <?php }}else{
+if ($isBackButton) { ?>
     <a href="/controller/list_employee.php?page=<?php echo $back; ?>">back</a>
 <?php } ?>
 <?php echo $page + 1; ?> from <?php echo $pagesCount; ?> pages
 <?php if ($isNextButton) { ?>
     <a href="/controller/list_employee.php?page=<?php echo $next; ?>">next</a>
-<?php } ?>
+<?php } }?>
 <br>
 <a href="/controller/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
 </body>

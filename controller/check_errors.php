@@ -57,6 +57,9 @@ function getActionStatuts()
         if ($_GET['status'] == 'notExist') {
             return "id not exist";
         }
+        if($_GET['status'] == 'badId') {
+            return "incorrect employee id";
+        }
     }
 }
 
