@@ -12,9 +12,8 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
-    $status = checkFormErrors($name, $lastname, $rate);
+    $status = checkEmployeeForm($name, $lastname, $rate);
     $employeeExistStatus = checkEmployeeExist($name, $lastname);
-    var_dump($employeeExistStatus);
     if ($employeeExistStatus != null) {
         $status['exist'] = $employeeExistStatus;
     }

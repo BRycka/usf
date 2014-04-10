@@ -35,25 +35,10 @@ function testing_numbers($data)
 
 function checkEmployeeExist($name, $lastname, $id = null)
 {
-//    var_dump(getEmployee($name, $lastname, $id));
-    $list = getEmployee($name, $lastname, $id);
-    var_dump($list);
-    if($list !== NULL){
+    $exist = isEmployeeExist($name, $lastname, $id);
+    if($exist){
         return "<p>Employee with this name and lastname already exists</p>";
     }
-
-//    $rows = getEmployee($name, $lastname);
-//    foreach($rows as $row):
-//        if ($id !== null) {
-//            if ($name == $row['name'] && $lastname == $row['lastname'] && $id !== $row['id']) {
-//                return "<p>Employee with this name and lastname already exists</p>";
-//            }
-//        } else {
-//            if ($name == $row['name'] && $lastname == $row['lastname']) {
-//                return "<p>Employee with this name and lastname already exists</p>";
-//            }
-//}
-//    endforeach;
     return null;
 }
 
@@ -72,7 +57,7 @@ function getActionStatuts()
     }
 }
 
-function checkFormErrors($name, $lastname, $rate)
+function checkEmployeeForm($name, $lastname, $rate)
 {
     $status = array();
     //name errors
