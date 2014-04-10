@@ -25,12 +25,13 @@ function connectToDb()
  * @param $dir
  * getting all employee list
  */
-function getOrderedEmployeeList($order, $dir)
+function getOrderedEmployeeList($order, $dir, $limit, $offset)
 {
     $list = [];
     $mysqli = connectToDb();
     $statment = $mysqli->stmt_init();
-    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' ' . $dir . ' LIMIT 2 OFFSET 11');
+    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' ' . $dir . ' LIMIT ? OFFSET ?');
+    $statment->bind_param('ii', $limit, $offset);
     $statment->execute();
     $row = array(
         'id' => null,
@@ -133,4 +134,10 @@ function isEmployeeExist($name, $lastname, $id){
     $stmt->bind_result($count);
     $stmt->fetch();
     return $count != 0;
+}
+function getAllEmployeeCount(){
+    $mysqli = connectToDb();
+    $result = $mysqli->query("SELECT COUNT(*) FROM Employee");
+    $rows = $result->fetch_row();
+    return $rows[0];
 }

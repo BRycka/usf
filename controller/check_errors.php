@@ -46,16 +46,16 @@ function getActionStatuts()
 {
     if (isset($_GET['status'])) {
         if ($_GET['status'] == 'updated') {
-            echo "successfully updated";
+            return "successfully updated";
         }
         if ($_GET['status'] == 'added') {
-            echo "successfully added";
+            return "successfully added";
         }
         if ($_GET['status'] == 'deleted') {
-            echo "successfully deleted";
+            return "successfully deleted";
         }
         if ($_GET['status'] == 'notExist') {
-            echo "id not exist";
+            return "id not exist";
         }
     }
 }

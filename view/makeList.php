@@ -3,6 +3,7 @@
 <head>
 </head>
 <body>
+<?php echo $action ?>
 <table border="1">
     <thead>
     <tr>
@@ -30,9 +31,17 @@
                 </form>
             </td>
         </tr>
-</tbody>
-<?php endforeach; ?>
+        </tbody>
+    <?php endforeach; ?>
 </table>
+<?php if ($isBackButton) { ?>
+    <a href="/controller/list_employee.php?page=<?php echo $back; ?>">back</a>
+<?php } ?>
+<?php echo $page + 1; ?> from <?php echo $pagesCount; ?> pages
+<?php if ($isNextButton) { ?>
+    <a href="/controller/list_employee.php?page=<?php echo $next; ?>">next</a>
+<?php } ?>
+<br>
 <a href="/controller/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
 </body>
 </html>
