@@ -54,10 +54,13 @@ function getActionStatuts()
         if ($_GET['status'] == 'deleted') {
             echo "successfully deleted";
         }
+        if ($_GET['status'] == 'notExist') {
+            echo "id not exist";
+        }
     }
 }
 
-function checkEmployeeForm($name, $lastname, $rate)
+function checkEmployeeForm($name, $lastname, $rate, $id = 0)
 {
     $status = array();
     //name errors
@@ -92,6 +95,10 @@ function checkEmployeeForm($name, $lastname, $rate)
         }
     } else {
         $status['rate'] = "<p>missing data in this field</p>";
+    }
+    $employeeExistStatus = checkEmployeeExist($name, $lastname, $id);
+    if ($employeeExistStatus != null) {
+        $status['exist'] = $employeeExistStatus;
     }
     return $status;
 }

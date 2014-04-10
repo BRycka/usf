@@ -13,13 +13,10 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
     $status = checkEmployeeForm($name, $lastname, $rate);
-    $employeeExistStatus = checkEmployeeExist($name, $lastname);
-    if ($employeeExistStatus != null) {
-        $status['exist'] = $employeeExistStatus;
-    }
     if (empty($status)) {
         addEmployee($name, $lastname, $rate);
-        //header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=added");
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=added");
+        return;
     }
 }
 $name_value = null;

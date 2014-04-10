@@ -7,37 +7,36 @@
  */
 require('../model/db.php');
 require('check_errors.php');
-
 $action = 'Update';
 $id = null;
-if(isset($_GET['id'])){
+if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']) && isset($_GET['id'])) {
     $id = $_GET['id'];
-}
-if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
     $lastname = trim($_POST['lastname']);
     $rate = trim($_POST['rate']);
-    $status = checkEmployeeForm($name, $lastname, $rate);
-    $employeeExistStatus = checkEmployeeExist($name, $lastname, $id);
-    if ($employeeExistStatus != null) {
-        $status['exist'] = $employeeExistStatus;
-    }
+    $status = checkEmployeeForm($name, $lastname, $rate, $id);
     if (empty($status)) {
         updateEmployee($name, $lastname, $rate, $id);
-        //header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=updated");
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=updated");
+        return;
     }
 }
 if (empty($status)) {
     $status = null;
 }
 $employee = getEmployeeById($id);
-if (!isset($_POST['name'])) {
-    $name_value = htmlspecialchars($employee['name']);
-    $lastname_value = htmlspecialchars($employee['lastname']);
-    $rate_value = htmlspecialchars($employee['hourlyRate']);
+if ($employee['id'] != 0) {
+    if (!isset($_POST['name'])) {
+        $name_value = htmlspecialchars($employee['name']);
+        $lastname_value = htmlspecialchars($employee['lastname']);
+        $rate_value = htmlspecialchars($employee['hourlyRate']);
+    } else {
+        $name_value = htmlspecialchars($_POST['name']);
+        $lastname_value = htmlspecialchars($_POST['lastname']);
+        $rate_value = htmlspecialchars($_POST['rate']);
+    }
+    require('../view/makeForm.php');
 } else {
-    $name_value = htmlspecialchars($_POST['name']);
-    $lastname_value = htmlspecialchars($_POST['lastname']);
-    $rate_value = htmlspecialchars($_POST['rate']);
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=notExist");
 }
-require('../view/makeForm.php');
+

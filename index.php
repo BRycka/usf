@@ -5,4 +5,4 @@
  * Date: 07/04/14
  * Time: 15:54
  */
-require('controller/main.php');
+require('controller/list_employee.php');

@@ -21,9 +21,9 @@
             <td><?php echo $row['name']; ?></td>
             <td><?php echo $row['lastname']; ?></td>
             <td><?php echo $row['hourlyRate']; ?></td>
-            <td><a href="../controller/update_employee.php?id=<?php echo $row['id'] ?>">Update</a></td>
+            <td><a href="/controller/update_employee.php?id=<?php echo $row['id'] ?>">Update</a></td>
             <td>
-                <form method="post" action="/" style="margin-bottom: 0;">
+                <form method="post" action="/controller/delete_employee.php" style="margin-bottom: 0;">
                     <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
                     <input type="submit" name="delete" value="Delete"
                            onclick="return confirm('Are you sure you want to delete?');">
@@ -33,6 +33,6 @@
 </tbody>
 <?php endforeach; ?>
 </table>
-<a href="../controller/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
+<a href="/controller/add_employee.php"><?php echo htmlspecialchars('--->>>Add new employee<<<---'); ?></a>
 </body>
 </html>

@@ -30,7 +30,7 @@ function getOrderedEmployeeList($order, $dir)
     $list = [];
     $mysqli = connectToDb();
     $statment = $mysqli->stmt_init();
-    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' ' . $dir);
+    $statment->prepare('SELECT * FROM Employee ORDER BY ' . $order . ' ' . $dir . ' LIMIT 2 OFFSET 11');
     $statment->execute();
     $row = array(
         'id' => null,
