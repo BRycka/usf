@@ -5,8 +5,9 @@
  * Date: 31/03/14
  * Time: 11:57
  */
-require('../model/db.php');
-require('check_errors.php');
+define('USF_DIR', '/home/ricblt/workspace/usf/');
+require(USF_DIR . 'model/db.php');
+require(USF_DIR . 'help/check_errors.php');
 $action = 'Update';
 if(!isset($_GET['id']) || !($employee = getEmployeeById($_GET['id'])) || $employee['id'] == 0) {
     header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=notExist");
@@ -38,4 +39,4 @@ if (!isset($_POST['name'])) {
     $rate_value = htmlspecialchars($_POST['rate']);
 }
 
-require('../view/makeForm.php');
+require(USF_DIR . 'view/makeForm.php');

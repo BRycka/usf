@@ -5,8 +5,10 @@
  * Date: 31/03/14
  * Time: 11:57
  */
-require('../model/db.php');
-require('check_errors.php');
+define('USF_DIR', '/home/ricblt/workspace/usf/');
+require(USF_DIR . 'model/db.php');
+require(USF_DIR . 'help/check_errors.php');
+//require('index.php');
 $action = 'Add';
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
@@ -30,4 +32,4 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
 if (empty($status)) {
     $status = null;
 }
-require('../view/makeForm.php');
+require(USF_DIR . 'view/makeForm.php');

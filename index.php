@@ -5,4 +5,7 @@
  * Date: 07/04/14
  * Time: 15:54
  */
-require('controller/list_employee.php');
+// define our application directory
+define('USF_DIR', '/home/ricblt/workspace/usf/');
+
+include(USF_DIR . 'controller/list_employee.php');

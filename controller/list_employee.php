@@ -5,10 +5,10 @@
  * Date: 31/03/14
  * Time: 10:12
  */
-chdir(__DIR__);
-require('pages_count.php');
-require('../model/db.php');
-require('check_errors.php');
+//chdir(__DIR__);
+require(USF_DIR . 'help/pages_count.php');
+require(USF_DIR . 'model/db.php');
+require(USF_DIR . 'help/check_errors.php');
 $orderBy = array('name', 'lastname', 'hourlyRate');
 $order = 'name';
 $dir = 'asc';
@@ -41,4 +41,4 @@ if(!$test){
 extract($test);
 $list = getOrderedEmployeeList($order, $dir, $limit, $offset);
 $action = getActionStatuts();
-require('../view/makeList.php');
+require(USF_DIR . 'view/makeList.php');
