@@ -35,7 +35,8 @@ function testing_numbers($data)
 
 function checkEmployeeExist($name, $lastname, $id = null)
 {
-    $exist = isEmployeeExist($name, $lastname, $id);
+    $db = new data_base();
+    $exist = $db->isEmployeeExist($name, $lastname, $id);
     if($exist){
         return "<p>Employee with this name and lastname already exists</p>";
     }

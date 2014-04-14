@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        p {
-            color: pink;
-        }
-
-        p {
-            margin-top: 1px;
-            margin-bottom: 1px;
-        }
-    </style>
-</head>
-
-<body>
 <?php
 if (isset($status['exist'])) {
     echo $status['exist'];
@@ -68,6 +51,5 @@ if (isset($status['exist'])) {
         <input type="submit" value="<?php echo $action; ?>">
     </fieldset>
 </form>
-<a href='/'>Main page</a>
-</body>
-</html>
+<a href='index.php?action=list_employee'>List employee</a><br>
+<a href="/">Dashboard</a>

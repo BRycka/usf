@@ -5,10 +5,7 @@
  * Date: 31/03/14
  * Time: 11:57
  */
-define('USF_DIR', '/home/ricblt/workspace/usf/');
-require(USF_DIR . 'model/db.php');
-require(USF_DIR . 'help/check_errors.php');
-//require('index.php');
+$db = new data_base();
 $action = 'Add';
 if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate'])) {
     $name = trim($_POST['name']);
@@ -16,8 +13,8 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
     $rate = trim($_POST['rate']);
     $status = checkEmployeeForm($name, $lastname, $rate);
     if (empty($status)) {
-        addEmployee($name, $lastname, $rate);
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?status=added");
+        $db->addEmployee($name, $lastname, $rate);
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?action=list_employee&status=added");
         return;
     }
 }
@@ -32,4 +29,4 @@ if (isset($_POST['name']) && isset($_POST['lastname']) && isset($_POST['rate']))
 if (empty($status)) {
     $status = null;
 }
-require(USF_DIR . 'view/makeForm.php');
+require('view/makeForm.php');
