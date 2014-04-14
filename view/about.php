@@ -7,4 +7,4 @@
 <p>Usu euismod consetetur cu. Sit an lucilius molestiae similique, usu te civibus fierent erroribus. Mea ea alia minim, in sit putent prompta accumsan. Ex dicat essent putant quo, adhuc mnesarchum ad mei. Aperiri veritus vivendum ne mei, in semper iriure nam. Oporteat atomorum id sed, wisi magna ea eos, ex vix dicam invidunt.</p>
 
 <p>Quaeque equidem adipisci cu mei, ea ius lorem audire alterum. Vocibus sapientem intellegam ei est, verterem partiendo an qui. Ut liber verterem consequat pri, vix ancillae intellegam cotidieque ne. Ea dico cetero sit, ius choro molestiae adversarium ei, partiendo expetenda appellantur te vel. Duo ad commodo fuisset, harum salutatus te sed.</p>
-<a href="/">Dashboard</a>
+<a href="/index/dashboard">Dashboard</a>

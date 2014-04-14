@@ -70,7 +70,7 @@ function checkEmployeeForm($name, $lastname, $rate, $id = 0)
     //name errors
     if ($name !== '') {
         if (testing_letters($name) !== false) {
-            $data = explode(" ", $_POST['name']);
+            $data = explode(" ", $name);
             if (count($data) > 2) {
                 $status['name'] = "<p>just two names possible</p>";
             }

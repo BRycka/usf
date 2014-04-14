@@ -51,5 +51,5 @@ if (isset($status['exist'])) {
         <input type="submit" value="<?php echo $action; ?>">
     </fieldset>
 </form>
-<a href='index.php?action=list_employee'>List employee</a><br>
-<a href="/">Dashboard</a>
+<a href='list?action=list_employee'>List employee</a><br>
+<a href="/index/dashboard">Dashboard</a>
