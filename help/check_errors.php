@@ -5,6 +5,11 @@
  * Date: 02/04/14
  * Time: 12:04
  */
+//class check_errors{
+//    private $status;
+//    public function __construct($status){
+//        $this->status = $status;
+//    }
 function testing_letters($data)
 {
     $masyvas = array('A', 'a', 'Ą', 'ą', 'B', 'b', 'C', 'c', 'Č', 'č', 'D', 'd', 'E', 'e', 'Ę', 'ę',
@@ -52,7 +57,7 @@ function getActionStatuts()
         if ($_GET['status'] == 'added') {
             return "successfully added";
         }
-        if ($_GET['status'] == 'deleted') {
+        if ($this->status == 'deleted') {
             return "successfully deleted";
         }
         if ($_GET['status'] == 'notExist') {
@@ -106,3 +111,4 @@ function checkEmployeeForm($name, $lastname, $rate, $id = 0)
     }
     return $status;
 }
+//}

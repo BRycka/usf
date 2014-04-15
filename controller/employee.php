@@ -55,12 +55,7 @@ class employee
             var_dump($this->post['id']);
             //header("Location: http://" . $_SERVER['SERVER_NAME'] . "/?action=list_employee&status=deleted");
             return array(
-                "headers" => array("Location" => "/employee/list?status=deleted"),
-                "status" => 303
-            );
-        }else{
-            return array(
-                "headers" => array("Location" => "/employee/list?status=notDeleted"),
+                "headers" => array("Location" => "/employee/list/deleted"),
                 "status" => 303
             );
         }
