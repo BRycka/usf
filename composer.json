@@ -1,0 +1,14 @@
+{
+    "name": "ricblt/usf",
+    "authors": [
+        {
+            "name": "Ricardas",
+            "email": "BRycka121@gmail.com"
+        }
+    ],
+    "require": {
+        "react/react": "0.4.*",
+        "react/http": "0.4.*",
+        "ronanguilloux/php-gpio": "1.0.x-dev"
+    }
+}

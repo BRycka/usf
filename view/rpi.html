@@ -1,0 +1,62 @@
+{
+    "name": "ronanguilloux/php-gpio",
+    "type": "library",
+    "description": "GPIO-related utils & toolkit PHP library",
+    "keywords": ["GPIO", "hardware", "chipset", "input", "output", "port", "pin", "chip", "sensors", "raspberry", "raspberry pi"],
+    "homepage": "https://github.com/ronanguilloux/php-gpio",
+    "license": "MIT",
+    "authors": [
+        {
+        "name": "Ronan Guilloux",
+        "email": "ronan.guilloux@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "react/react": "0.4.*",
+        "react/http": "0.4.*
+    },
+    "autoload": {
+        "psr-0": { "PhpGpio": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
+
+        /////////////////////////////////////////////////////////
+<?php
+require 'vendor/autoload.php';
+
+$i = 0;
+
+$app = function ($request, $response) use (&$i) {
+    $i++;
+        //File to read
+        $file = '../../../sys/bus/w1/devices/w1_bus_master1/28-00000463e239/w1_slave';
+
+        //Read the file line by line
+        $lines = file($file);
+
+        //Get the temp from second line
+        $temp = explode('=', $lines[1]);
+
+        //Setup some nice formatting (i.e. 21,3)
+        $temp = number_format($temp[1] / 1000, 1, ',', '');
+
+    $text = "This is request number $i.\n";
+    $headers = array('Content-Type' => 'text/plain');
+
+$response->writeHead(200, $headers);
+$response->end($temp);
+};
+$loop = React\EventLoop\Factory::create();
+$socket = new React\Socket\Server($loop);
+$http = new React\Http\Server($socket);
+
+$http->on('request', $app);
+echo "Server runing at http://127.0.0.1:1337\n";
+$socket->listen(1337, "0.0.0.0");
+$loop->run();

@@ -13,4 +13,7 @@ class index{
     public function dashboardAction(){
         require 'view/dashboard.php';
     }
+    public function memoryAction(){
+        require 'view/memoryUsage.php';
+    }
 }
