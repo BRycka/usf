@@ -7,7 +7,7 @@
  */
 class graph {
     public function testAction(){
-        echo json_encode(
+       echo json_encode(
             array(
                 "temperature_record" => array(
                     array(

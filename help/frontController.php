@@ -12,25 +12,24 @@ class frontController
 {
     public function dispatch(Request $request, Response $response)
     {
-        $filename = 'public' . $request->getPath();
+//        $filename = 'public' . $request->getPath();
 //        var_dump($filename);
-        //atvaizduoti atminties sunaudojima
-        $mimeTypes = array(
-            "css" => "text/css",
-            "html" => "text/html",
-            "js" => "application/javascript",
-        );
-        if(strpos($filename,'.')){
-        $extension = end(explode('.', $filename));
-        $mimeType = $mimeTypes[$extension];
-        }
-        if (file_exists($filename) && $mimeType !== null) {
-            $response->writeHead(null, array('Content-Type' => $mimeType,
-                'Content-Length' => filesize($filename)
-            ));
-            $response->end(file_get_contents($filename));
-            return;
-        }
+//        $mimeTypes = array(
+//            "css" => "text/css",
+//            "html" => "text/html",
+//            "js" => "application/javascript",
+//        );
+//        if(strpos($filename,'.')){
+//        $extension = end(explode('.', $filename));
+//        $mimeType = $mimeTypes[$extension];
+//        }
+//        if (file_exists($filename) && $mimeType !== null) {
+//            $response->writeHead(null, array('Content-Type' => $mimeType,
+//                'Content-Length' => filesize($filename)
+//            ));
+//            $response->end(file_get_contents($filename));
+//            return;
+//        }
         $request->on('data', function ($data) use ($request, $response) {
 
             $post = array();
@@ -39,14 +38,14 @@ class frontController
             parse_str($data, $post);
             $urlParams = explode('/', trim($request->getPath(), '/'));
             $filename = 'controller/' . $urlParams[0] . '.php';
-            $headers = array('Content-Type' => 'text/html');
-            $status = 200;
+//            $headers = array('Content-Type' => 'text/html');
+//            $status = 200;
             $method = $urlParams[1] . 'Action';
-
             if (file_exists($filename)) {
+                echo "1 ";
                 require_once $filename;
             } else {
-                $response->writeHead(303, array("Location" => "/index/dashboard"));
+                $response->writeHead(303, array("Location" => "/index/memory"));
                 $response->end();
                 return;
 //            $urlParams[0] = 'index';

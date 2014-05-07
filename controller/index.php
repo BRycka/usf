@@ -6,14 +6,13 @@
  * Time: 16:41
  */
 class index{
-    public function aboutAction(){
-        require 'view/about.php';
-    }
-
-    public function dashboardAction(){
-        require 'view/dashboard.php';
-    }
     public function memoryAction(){
         require 'view/memoryUsage.php';
+    }
+    public function loginAction(){
+        require 'view/login.php';
+    }
+    public function dashboardAction(){
+        require 'view/dashboard.php';
     }
 }
