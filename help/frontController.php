@@ -13,7 +13,7 @@ class frontController
     public function dispatch(Request $request, Response $response)
     {
 //        $filename = 'public' . $request->getPath();
-//        var_dump($filename);
+        //var_dump($filename);
 //        $mimeTypes = array(
 //            "css" => "text/css",
 //            "html" => "text/html",
@@ -38,14 +38,16 @@ class frontController
             parse_str($data, $post);
             $urlParams = explode('/', trim($request->getPath(), '/'));
             $filename = 'controller/' . $urlParams[0] . '.php';
-//            $headers = array('Content-Type' => 'text/html');
-//            $status = 200;
+            //echo "1 ";
+            //var_dump($filename, getcwd());
+            //echo "2 ";
+            $headers = array('Content-Type' => 'text/html');
+            $status = 200;
             $method = $urlParams[1] . 'Action';
             if (file_exists($filename)) {
-                echo "1 ";
                 require_once $filename;
             } else {
-                $response->writeHead(303, array("Location" => "/index/memory"));
+                $response->writeHead(303, array("Location" => "/index/dashboard"));
                 $response->end();
                 return;
 //            $urlParams[0] = 'index';

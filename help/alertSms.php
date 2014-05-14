@@ -17,6 +17,7 @@ class alertSms {
 //            }
 //            fclose($handle);
             echo "siunciu sms " . " " . $temp . "\n";
+            return "Down";
         } else if($temp > 25){
 //            $filename = "/dev/ttyACM0";
 //
@@ -33,7 +34,9 @@ class alertSms {
 //            }
 //            fclose($handle);
             echo "siunciu sms " . " " . $temp . "\n";
+            return "Up";
         }else
             echo "nesiunciu sms" . " " .$temp . "\n";
+            return "Ok";
         }
 }
